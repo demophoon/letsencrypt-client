@@ -1,0 +1,17 @@
+{
+  "name": "demophoon-letsencrypt_client",
+  "version": "0.1.0",
+  "author": "demophoon",
+  "summary": "Configure the letsencrypt cli tool and generate certificates using defined types",
+  "license": "mit",
+  "source": "https://github.com/demophoon/letsencrypt-client",
+  "project_page": "https://github.com/demophoon/letsencrypt-client",
+  "issues_url": "https://github.com/demophoon/letsencrypt-client/issues",
+  "dependencies": [
+    {
+      "name":"puppetlabs-stdlib","version_requirement":">= 1.0.0",
+      "name":"stankevich-python","version_requirement":">= 1.10.0"
+    }
+  ]
+}
+
