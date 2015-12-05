@@ -23,7 +23,7 @@ define letsencrypt_client::cert (
   #$flags = join($_options, ' ')
 
   exec { "${webroot}/letsencrypt/${domain_name}":
-    command => "letsencrypt certonly --webroot -webroot-path ${webroot} -d ${domain_name}",
+    command => "letsencrypt certonly --webroot --webroot-path ${webroot} -d ${domain_name}",
     path => "${install_dir}/bin:/usr/bin",
     unless => "openssl x509 -checkend 2592000 -noout -in /etc/letsencrypt/live/${domain_name}/cert.pem",
     require => Class['letsencrypt_client'],
