@@ -1,13 +1,12 @@
-# client
+# letsencrypt_client
 
 #### Table of Contents
 
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with client](#setup)
-    * [What client affects](#what-client-affects)
+3. [Setup - The basics of getting started with letsencrypt_client](#setup)
+    * [What letsencrypt_client affects](#what-letsencrypt_client-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with client](#beginning-with-client)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
