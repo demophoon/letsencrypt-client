@@ -31,7 +31,7 @@ left until it expires.
 
 * Installs python, virtualenv, pip, and letsencrypt
 
-### Setup Requirements **OPTIONAL**
+### Setup Requirements
 
 * Requires openssl to be installed and in /usr/bin
 
@@ -42,10 +42,12 @@ certificate from letsencrypt's CA.
 
 ## Reference
 
+```
 letsencrypt_client::cert { "www.example.com",
   webroot => "/var/www",
   domain_name => "$title",
 }
+```
 
 ## Limitations
 
@@ -56,6 +58,6 @@ This has been tested on Ubuntu 14.04.3 LTS
 The source is at https://github.com/demophoon/letsencrypt-client. Feel free to
 submit issues and or enhancement requests there.
 
-## Release Notes/Contributors/Etc **Optional**
+## Release Notes/Contributors/Etc
 
 Britt Gresham <britt@brittg.com>
