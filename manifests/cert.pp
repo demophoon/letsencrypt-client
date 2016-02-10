@@ -1,6 +1,6 @@
 define letsencrypt_client::cert (
-  String $webroot,
-  String $domain_name = $title,
+  $webroot,
+  $domain_name = $title,
 ) {
 
   include letsencrypt_client
@@ -13,19 +13,19 @@ define letsencrypt_client::cert (
   # /etc/letsencrypt/live/${domain_name}/
   #
   #$options_hash = {
-  #  'cert_path' => "/etc/letsencrypt/live/${domain_name}/cert.crt",
-  #  'key_path' => "/etc/letsencrypt/live/${domain_name}/key.pki",
+  #  'cert_path'      => "/etc/letsencrypt/live/${domain_name}/cert.crt",
+  #  'key_path'       => "/etc/letsencrypt/live/${domain_name}/key.pki",
   #  'fullchain_path' => "/etc/letsencrypt/live/${domain_name}/fullchain.crt",
-  #  'chain_path' => "/etc/letsencrypt/live/${domain_name}/chain.crt",
+  #  'chain_path'     => "/etc/letsencrypt/live/${domain_name}/chain.crt",
   #}
   #$_formatted_hash = prefix($options_hash, '--')
   #$_options = join_keys_to_values($_formatted_hash, '=')
   #$flags = join($_options, ' ')
 
   exec { "${webroot}/letsencrypt/${domain_name}":
-    command => "letsencrypt certonly --webroot --webroot-path ${webroot} -d ${domain_name}",
-    path => "${install_dir}/bin:/usr/bin",
-    unless => "openssl x509 -checkend 2592000 -noout -in /etc/letsencrypt/live/${domain_name}/cert.pem",
+    command => "letsencrypt certonly --register-unsafely-without-email --agree-tos --webroot --webroot-path ${webroot} -d ${domain_name}",
+    path    => "${install_dir}/bin:/usr/bin",
+    unless  => "openssl x509 -checkend 2592000 -noout -in /etc/letsencrypt/live/${domain_name}/cert.pem",
     require => Class['letsencrypt_client'],
   }
 }
