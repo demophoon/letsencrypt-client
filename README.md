@@ -49,9 +49,10 @@ at:
 ## Reference
 
 ```
-letsencrypt_client::cert { "www.example.com",
+letsencrypt_client::cert { "example.com",
   webroot     => "/var/www",
   domain_name => "$title",
+  sub_domains => ['mail.example.com', 'blog.example.com', 'www.example.com'],
 }
 ```
 

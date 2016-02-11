@@ -1,5 +1,8 @@
 # Change log
 
+### 0.1.4
+* Added aliases capability to allow letsencrypt to add more domains
+
 ### 0.1.3
 * Added `--register-unsafely-without-email` and `--agree-tos` to make the
 certificate request command work without interaction

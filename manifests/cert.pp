@@ -1,6 +1,7 @@
 define letsencrypt_client::cert (
   $webroot,
   $domain_name = $title,
+  $sub_domains = undef,
 ) {
 
   include letsencrypt_client
@@ -22,8 +23,15 @@ define letsencrypt_client::cert (
   #$_options = join_keys_to_values($_formatted_hash, '=')
   #$flags = join($_options, ' ')
 
+  if($sub_domains) {
+    $prefixed_sub_domains = prefix($sub_domains, '-d ')
+    $letsencrypt_command = "letsencrypt certonly --register-unsafely-without-email --agree-tos --webroot --webroot-path ${webroot} -d ${domain_name} ${prefixed_sub_domains}"
+  } else {
+    $letsencrypt_command = "letsencrypt certonly --register-unsafely-without-email --agree-tos --webroot --webroot-path ${webroot} -d ${domain_name}"
+  }
+
   exec { "${webroot}/letsencrypt/${domain_name}":
-    command => "letsencrypt certonly --register-unsafely-without-email --agree-tos --webroot --webroot-path ${webroot} -d ${domain_name}",
+    command => $letsencrypt_command,
     path    => "${install_dir}/bin:/usr/bin",
     unless  => "openssl x509 -checkend 2592000 -noout -in /etc/letsencrypt/live/${domain_name}/cert.pem",
     require => Class['letsencrypt_client'],
