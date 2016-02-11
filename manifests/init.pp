@@ -29,21 +29,30 @@ class letsencrypt_client inherits letsencrypt_client::params {
     'letsencrypt',
   ]
 
-  class { 'python' :
+  # TODO: Make this work across OS
+  $required_dev_packages = ['libffi-dev', 'libssl-dev']
+
+  package { $required_dev_packages:
+    ensure => present
+  }
+
+  class { 'python':
     version    => 'system',
+    dev        => 'present',
     pip        => 'present',
     virtualenv => 'present',
+    require    => Package[$required_dev_packages]
   }
 
   python::virtualenv { $install_dir:
-    ensure => present,
+    ensure  => present,
     require => Class['python'],
   }
 
   python::pip { $pip_packages:
-    ensure => latest,
+    ensure     => latest,
     virtualenv => $install_dir,
-    require => Python::Virtualenv[$install_dir],
+    require    => Python::Virtualenv[$install_dir],
   }
 
 }

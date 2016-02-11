@@ -29,29 +29,38 @@ left until it expires.
 
 ### What letsencrypt_client affects
 
-* Installs python, virtualenv, pip, and letsencrypt
+* Installs python, python-dev, libffi-dev, libssl-dev, virtualenv, pip, and
+letsencrypt
 
 ### Setup Requirements
 
-* Requires openssl to be installed and in /usr/bin
+* Requires `openssl` to be installed and in /usr/bin
 
 ## Usage
 
 Simply use the letsencrypt_client::cert defined resource type to request a
 certificate from letsencrypt's CA.
 
+Please ensure that you make regular backups of the letsencrypt directory that
+is used to store the private keys / certificates generated, these are located
+at:
+`/etc/letsencrypt`.
+
 ## Reference
 
 ```
-letsencrypt_client::cert { "www.example.com",
-  webroot => "/var/www",
+letsencrypt_client::cert { "example.com",
+  webroot     => "/var/www",
   domain_name => "$title",
+  sub_domains => ['mail.example.com', 'blog.example.com', 'www.example.com'],
 }
 ```
 
 ## Limitations
 
-This has been tested on Ubuntu 14.04.3 LTS
+This has been tested on:
+
+* Ubuntu 14.04.3 LTS
 
 ## Development
 
@@ -60,4 +69,5 @@ submit issues and or enhancement requests there.
 
 ## Release Notes/Contributors/Etc
 
-Britt Gresham <britt@brittg.com>
+* Britt Gresham <britt@brittg.com>
+* Adam Cooper <adam@genericstudent.com>
