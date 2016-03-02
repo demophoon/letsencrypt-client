@@ -47,6 +47,19 @@ letsencrypt_client::cert { "www.example.com",
   webroot => "/var/www",
   domain_name => "$title",
 }
+
+letsencrypt_client::cert { "www.example.com",
+  domains => [
+    {
+      webroot     => '/path/to/webroot',
+      domain_name => 'example.com',
+    },
+    {
+      webroot     => '/path/to/webroot',
+      domain_name => 'www.example.com',
+    },
+  ],
+}
 ```
 
 ## Limitations

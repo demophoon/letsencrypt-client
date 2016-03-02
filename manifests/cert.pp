@@ -1,6 +1,7 @@
 define letsencrypt_client::cert (
-  String $webroot,
-  String $domain_name = $title,
+  Optional[String] $webroot,
+  Optional[String] $domain_name = $title,
+  Optional[Array[Hash]] $domains = undef,
 ) {
 
   include letsencrypt_client
@@ -22,8 +23,34 @@ define letsencrypt_client::cert (
   #$_options = join_keys_to_values($_formatted_hash, '=')
   #$flags = join($_options, ' ')
 
+  if ! $domains {
+    if $webroot and $domain_name {
+      $_domains = [{
+        webroot => $webroot,
+        domain_name => $domain_name,
+      }]
+    } else {
+      fail('The letsencrypt_client::cert class must be given both a webroot and domain_name.')
+    }
+  } else {
+    if $webroot or $domain_name {
+      $_domains = concat($domains, {
+        webroot => $webroot,
+        domain_name => $domain_name,
+      })
+    } else {
+      $_domains = $domains
+    }
+  }
+
+  $flags = $_domains.map |$item| {
+    "--webroot-path ${item['webroot']} -d ${item['domain_name']}"
+  }
+
+  $flags_string = join($flags, " ")
+
   exec { "${webroot}/letsencrypt/${domain_name}":
-    command => "letsencrypt certonly --webroot --webroot-path ${webroot} -d ${domain_name}",
+    command => "letsencrypt certonly --webroot ${flags_string}",
     path => "${install_dir}/bin:/usr/bin",
     unless => "openssl x509 -checkend 2592000 -noout -in /etc/letsencrypt/live/${domain_name}/cert.pem",
     require => Class['letsencrypt_client'],

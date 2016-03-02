@@ -21,9 +21,9 @@
 #
 # Copyright 2015 Britt Gresham
 #
-class letsencrypt_client inherits letsencrypt_client::params {
-
-  $install_dir = $letsencrypt_client::params::install_dir
+class letsencrypt_client (
+  $install_dir = $letsencrypt_client::params::install_dir,
+) inherits letsencrypt_client::params {
 
   $pip_packages = [
     'letsencrypt',
