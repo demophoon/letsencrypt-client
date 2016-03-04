@@ -2,11 +2,12 @@ define letsencrypt_client::cert (
   Optional[String] $webroot,
   Optional[String] $domain_name = $title,
   Optional[Array[Hash]] $domains = undef,
-  $install_dir = $letsencrypt_client::params::install_dir,
-  $server = $letsencrypt_client::params::acme_server,
 ) {
 
   include letsencrypt_client
+
+  $install_dir = $letsencrypt_client::params::install_dir
+  $server = $letsencrypt_client::params::acme_server
 
   # This does not currently work for the certonly method of domain validation.
   # Certificates and private keys by default live in
@@ -43,7 +44,7 @@ define letsencrypt_client::cert (
   }
 
   $flags = $_domains.map |$item| {
-    "--webroot-path ${item[webroot]} -d ${item[domain_name]}"
+    "--webroot-path ${item['webroot']} -d ${item['domain_name']}"
   }
 
   $flags_string = join($flags, " ")
