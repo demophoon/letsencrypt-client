@@ -33,7 +33,7 @@ define letsencrypt_client::cert (
       fail('The letsencrypt_client::cert class must be given both a webroot and domain_name.')
     }
   } else {
-    if $webroot or $domain_name {
+    if $webroot and $domain_name {
       $_domains = concat($domains, {
         webroot => $webroot,
         domain_name => $domain_name,
@@ -49,7 +49,7 @@ define letsencrypt_client::cert (
 
   $flags_string = join($flags, " ")
 
-  exec { "${webroot}/letsencrypt/${domain_name}":
+  exec { "letsencrypt certonly ${domain_name}":
     command => "letsencrypt certonly --webroot ${flags_string}",
     path => "${install_dir}/bin:/usr/bin",
     unless => "openssl x509 -checkend 2592000 -noout -in /etc/letsencrypt/live/${domain_name}/cert.pem",
