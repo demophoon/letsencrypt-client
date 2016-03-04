@@ -1,6 +1,6 @@
 {
   "name": "demophoon-letsencrypt_client",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": "demophoon",
   "summary": "Configure the letsencrypt cli tool and generate certificates using defined types",
   "license": "mit",

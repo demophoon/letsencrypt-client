@@ -1,5 +1,5 @@
 define letsencrypt_client::cert (
-  Optional[String] $webroot,
+  Optional[String] $webroot = undef,
   Optional[String] $domain_name = $title,
   Optional[Array[Hash]] $domains = undef,
 ) {
